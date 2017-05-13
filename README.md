@@ -96,3 +96,11 @@ $('.get_photos').each(function() {
 
 });
 ```
+## EN CSS
+```css
+.item-projecto{position:relative;display:block;clear:both;}
+.get_photos{display:none;}
+.info-gallery .btn-default{border:0 !important;background:#992800 !important;padding:0px !important;}
+.item-projecto{text-align:center;}
+.item-projecto h1{font-size:14px;line-height:20px;margin:5px 0;}
+```
