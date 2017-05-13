@@ -1,4 +1,4 @@
-# Galeria de Imagenes Usando Albumes de Facebook
+# Galeria de imagenes en PHP usando albumes de Facebook
 ## con el API de los albumes de Facebook, en PHP y JS para abrir en un lightbox cada imagen.
 
 DEMO: [http://decoprin.com/](http://decoprin.com/)
