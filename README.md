@@ -74,4 +74,25 @@ foreach ($dc as $k => $c) {
 }
 ?>
 ```
+## EN JS
+```javascript
+$(function(){
 
+//******************* FUNCION LIGHTBOX GALERIA FACEBOOK ********************//
+
+$('.load_photos_album').click(function(e){
+e.preventDefault();
+var albumID = $(this).attr('album');
+$('.get_photos').each(function() {
+    $(this).magnificPopup({
+        delegate: 'a.'+albumID,
+        type: 'image',
+        gallery: {
+          enabled:true
+        }
+    });
+}).magnificPopup('open');
+});  
+
+});
+```
