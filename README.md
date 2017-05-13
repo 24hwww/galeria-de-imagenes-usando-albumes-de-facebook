@@ -8,6 +8,74 @@ Este script nació como una solución, al problema: "como hacer para que un clie
 
 ### Requerimientos:
 Esta demas decir los requerimientos basicos para correr PHP.
-Lo que se necesita colocar para este caso es: [https://cdnjs.com/libraries/magnific-popup.js/](jquery.magnific-popup.min.js) esto para crear el lightbox donde se abriran las imagenes cargadas.
+Lo que se necesita colocar para este caso es: [jquery.magnific-popup.min.js](https://cdnjs.com/libraries/magnific-popup.js/) esto para crear el lightbox donde se abriran las imagenes cargadas.
 
+sin mas preambulo veamos los codigos:
+
+```php
+<?php
+$contents = file_get_contents('https://graph.facebook.com/1698000627183449?fields=albums&access_token=1447616038876416|6eb3ba74b0511f1318257cd7cbe15e9f');
+$albums = json_decode($contents,true);
+$albums1 = $albums['data'];
+
+function get_cover_photo($string){
+	$url_cover_photo = 'https://graph.facebook.com/'.$string.'?fields=images&access_token=1447616038876416|6eb3ba74b0511f1318257cd7cbe15e9f';
+	$photo_cover = file_get_contents($url_cover_photo);
+	$get_photo_cover = json_decode($photo_cover,true);
+		foreach ($get_photo_cover['images'] as $ky) {
+		//if($ky['width'] == '330'){
+			$src_cover = $ky['source'];
+		//}
+	}
+	echo "<img style='margin:0 auto' class='load_photos_album img-responsive' src='".$src_cover."'>";	
+	return false;
+}
+function get_photos($string){
+$url = "https://graph.facebook.com/".$string."/photos?limit=30&fields=images&access_token=1447616038876416|6eb3ba74b0511f1318257cd7cbe15e9f";
+$photos = file_get_contents($url);
+$get_photos = json_decode($photos,true);
+echo '<div class="get_photos">';
+	foreach ($get_photos as $image) {
+		foreach($image as $source => $src) {
+		$photoID = $src['id'];
+			if(!empty($photoID)){
+				//echo '<a class="'.$string.'" href="https://graph.facebook.com/'.$photoID.'/picture">'.$photoID.'</a>';
+				echo '<a class="'.$string.'" href="https://graph.facebook.com/'.$photoID.'/picture"></a>';				
+			}
+		}
+	}
+echo '</div>';
+return false;
+}
+
+foreach ($albums as $key => $content) {
+
+if (isset($content['data'])) {
+    $dc = $content['data'];
+	
+foreach ($dc as $k => $c) {
+
+	if($c['type'] == 'normal'){
+	
+	echo '<div class="col-sm-6 form-group"><div class="item-projecto">';
+	echo '<div class="img-projecto">';
+	
+	echo '<a href="javascript:value(0);" album="'.$c["id"].'" title="Ver Galeria: '.$c["name"].'" class="load_photos_album btn btn-default">';
+	
+	get_cover_photo($c['cover_photo']);
+	
+	echo '</a>';
+	
+	echo '</div>';
+	//echo '<h1>'.$c["name"].'</h1>';
+	//echo '<p title="'.$c["description"].'">'.substr($c["description"],0,50).'...</p>';
+	//echo '<a href="javascript:value(0);" album="'.$c["id"].'" title="Doble Click: '.$c["name"].'" class="load_photos_album btn btn-default">Ver Galería</a>';
+	get_photos($c["id"]);
+	echo '</div></div>';
+	}
+}	 
+}
+}
+?> 
+```
 
