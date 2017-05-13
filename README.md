@@ -1,5 +1,5 @@
-# Galeria de Imaganes Usando Albumes de Facebook
-## Galeria de imagenes usando el API de los albumes de Facebook, en PHP y JS para abrir en un lightbox cada imagen.
+# Galeria de Imagenes Usando Albumes de Facebook
+## con el API de los albumes de Facebook, en PHP y JS para abrir en un lightbox cada imagen.
 
 DEMO: [http://decoprin.com/](http://decoprin.com/)
 
@@ -12,26 +12,25 @@ Lo que se necesita colocar para este caso es: [jquery.magnific-popup.min.js](htt
 
 sin mas preambulo veamos los codigos:
 
+## EN PHP
 ```php
 <?php
-$contents = file_get_contents('https://graph.facebook.com/1698000627183449?fields=albums&access_token=1447616038876416|6eb3ba74b0511f1318257cd7cbe15e9f');
+$contents = file_get_contents('https://graph.facebook.com/[ID de la FanPage]?fields=albums&access_token=[Access Token]');
 $albums = json_decode($contents,true);
 $albums1 = $albums['data'];
 
 function get_cover_photo($string){
-	$url_cover_photo = 'https://graph.facebook.com/'.$string.'?fields=images&access_token=1447616038876416|6eb3ba74b0511f1318257cd7cbe15e9f';
+	$url_cover_photo = 'https://graph.facebook.com/'.$string.'?fields=images&access_token=[Access Token]';
 	$photo_cover = file_get_contents($url_cover_photo);
 	$get_photo_cover = json_decode($photo_cover,true);
 		foreach ($get_photo_cover['images'] as $ky) {
-		//if($ky['width'] == '330'){
 			$src_cover = $ky['source'];
-		//}
 	}
 	echo "<img style='margin:0 auto' class='load_photos_album img-responsive' src='".$src_cover."'>";	
 	return false;
 }
 function get_photos($string){
-$url = "https://graph.facebook.com/".$string."/photos?limit=30&fields=images&access_token=1447616038876416|6eb3ba74b0511f1318257cd7cbe15e9f";
+$url = "https://graph.facebook.com/".$string."/photos?limit=30&fields=images&access_token=[Access Token]";
 $photos = file_get_contents($url);
 $get_photos = json_decode($photos,true);
 echo '<div class="get_photos">';
@@ -39,7 +38,6 @@ echo '<div class="get_photos">';
 		foreach($image as $source => $src) {
 		$photoID = $src['id'];
 			if(!empty($photoID)){
-				//echo '<a class="'.$string.'" href="https://graph.facebook.com/'.$photoID.'/picture">'.$photoID.'</a>';
 				echo '<a class="'.$string.'" href="https://graph.facebook.com/'.$photoID.'/picture"></a>';				
 			}
 		}
@@ -67,15 +65,13 @@ foreach ($dc as $k => $c) {
 	echo '</a>';
 	
 	echo '</div>';
-	//echo '<h1>'.$c["name"].'</h1>';
-	//echo '<p title="'.$c["description"].'">'.substr($c["description"],0,50).'...</p>';
-	//echo '<a href="javascript:value(0);" album="'.$c["id"].'" title="Doble Click: '.$c["name"].'" class="load_photos_album btn btn-default">Ver Galería</a>';
 	get_photos($c["id"]);
 	echo '</div></div>';
+	
 	}
 }	 
 }
 }
-?> 
+?>
 ```
 
